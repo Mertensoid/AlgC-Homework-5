@@ -311,9 +311,6 @@ void solution4() {
     NewStack.head = NULL;
     
     copyStack(&OldStack, &NewStack);
-    printStack_new(&NewStack);
-    push_new(&OldStack, 4);
-    push_new(&NewStack, 5);
     printStack_new(&OldStack);
     printStack_new(&NewStack);
 }
