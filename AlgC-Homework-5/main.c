@@ -11,12 +11,12 @@
 #include <malloc/malloc.h>
 #include <string.h>
 
+#define MAX 20
 
 void solution1();
-//void solution2();
+void solution2();
 void solution3();
 void solution4();
-//void solution5();
 void menu();
 
 int main(int argc, const char * argv[]) {
@@ -25,26 +25,22 @@ int main(int argc, const char * argv[]) {
 }
 
 void menu() {
-    srand( time(NULL) );
     int solutionNumber;
-    printf("Choose solution (1..3):\n");
+    printf("Choose solution (1..4):\n");
     scanf("%d", &solutionNumber);
     switch (solutionNumber) {
         case 1:
             solution1();
             break;
-//        case 2:
-//            solution2();
-//            break;
+        case 2:
+            solution2();
+            break;
         case 3:
             solution3();
             break;
         case 4:
             solution4();
             break;
-//        case 5:
-//            solution5();
-//            break;
         default:
             printf("Wrong solution number!");
             break;
@@ -188,7 +184,7 @@ void printCStack(struct CStack CStack) {
     }
 }
 
-void solution3() {
+void solution2() {
     printf("Solution 3: \n");
     
     char bracketSequence[20] = "(1)[agd{}23]";
@@ -295,7 +291,7 @@ void copyStack(Stack_new *oldStack, Stack_new *newStack) {
     }
 }
 
-void solution4() {
+void solution3() {
     Stack_new OldStack;
     OldStack.maxSize = 1000;
     OldStack.size = 0;
@@ -313,4 +309,79 @@ void solution4() {
     copyStack(&OldStack, &NewStack);
     printStack_new(&OldStack);
     printStack_new(&NewStack);
+}
+
+struct queue {
+    int items[MAX];
+    int front;
+    int rear;
+};
+
+struct queue* createQueue();
+void enqueue(struct queue* q, int);
+int dequeue(struct queue* q);
+int isEmpty(struct queue* q);
+void printQueue(struct queue *q);
+
+struct queue* createQueue() {
+    struct queue* q = malloc(sizeof(struct queue));
+    q->front = -1;
+    q->rear = -1;
+    return q;
+}
+
+int isEmpty(struct queue* q) {
+    if(q->rear == -1)
+        return 1;
+    else
+        return 0;
+}
+
+void enqueue(struct queue* q, int value) {
+    if (q->rear == MAX-1)
+        printf("\nQueue is Full!!");
+    else {
+        if(q->front == -1)
+            q->front = 0;
+        q->rear++;
+        q->items[q->rear] = value;
+    }
+}
+
+int dequeue(struct queue* q) {
+    int item;
+    if (isEmpty(q)) {
+        printf("Queue is empty\n");
+        item = -1;
+    }
+    else {
+        item = q->items[q->front];
+        q->front++;
+        if (q->front > q->rear) {
+            q->front = q->rear = -1;
+        }
+    }
+    return item;
+}
+
+void printQueue(struct queue *q) {
+    int i = q->front;
+    if(isEmpty(q)) {
+        printf("Queue is empty\n");
+    } else {
+        for (i = q->front; i < q->rear + 1; i++) {
+                printf("%d ", q->items[i]);
+        }
+    }
+}
+
+void solution4() {
+    struct queue* someQ = createQueue();
+    enqueue(someQ, 5);
+    enqueue(someQ, 4);
+    enqueue(someQ, 3);
+    enqueue(someQ, 2);
+    enqueue(someQ, 1);
+    dequeue(someQ);
+    printQueue(someQ);
 }
