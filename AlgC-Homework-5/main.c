@@ -313,5 +313,4 @@ void solution4() {
     copyStack(&OldStack, &NewStack);
     printStack_new(&OldStack);
     printStack_new(&NewStack);
-    //что-то для создания пулреквеста
 }
